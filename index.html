@@ -38,10 +38,123 @@
   margin:18px 0 10px 0;
   display:block;
 }
+      /* Top bar */
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:#fff;
+  border-bottom:1px solid #e6e6e6;
+  z-index:1000;
+}
+
+.topbar-inner{
+  max-width:700px;
+  margin:0 auto;
+  padding:10px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  font-weight:700;
+  text-decoration:none;
+  color:#222;
+}
+
+.topbar button{
+  padding:8px 12px;
+  cursor:pointer;
+}
+
+/* Make room for the fixed bar */
+.page{
+  padding-top:62px;
+}
+
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:2000;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-card{
+  background:#fff;
+  width:100%;
+  max-width:600px;
+  border-radius:12px;
+  padding:18px;
+}
+
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.modal-header h2{
+  margin:0;
+}
+
+.close-btn{
+  background:transparent;
+  border:1px solid #ddd;
+  border-radius:8px;
+  padding:6px 10px;
+  cursor:pointer;
+}
+
+/* Form styling */
+.contact-form label{
+  display:block;
+  margin-bottom:12px;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  font-family:inherit;
+  font-size:1rem;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
+
+.contact-form button{
+  margin-top:6px;
+  padding:10px 14px;
+  cursor:pointer;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
 
   </style>
 </head>
 <body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#">Alex Mallett</a>
+    <button type="button" id="openContact">Contact</button>
+  </div>
+</div>
+<div class="page">
 
 <div class="header">
   <h1>Alex Mallett</h1>
@@ -78,23 +191,28 @@ Email: alexmallettproductions@outlook.com
 <p>
 <a href="https://www.linkedin.com/in/alex-mallett">LinkedIn profile</a>
 </p>
-<h2>Contact</h2>
 
-<h2>Contact</h2>
 
-<form action="https://formspree.io/f/xkowaaae" method="POST" class="contact-form">
+<div class="modal" id="contactModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Contact form">
+    <div class="modal-header">
+      <h2>Contact</h2>
+      <button type="button" class="close-btn" id="closeContact">Close</button>
+    </div>
 
-  <input type="hidden" name="_subject" value="Website enquiry">
+    <form action="https://formspree.io/f/xkowaaae" method="POST" class="contact-form">
+      <input type="hidden" name="_subject" value="Website enquiry">
 
-  <label>
-    Name<br>
-    <input type="text" name="name" required>
-  </label>
+      <label>
+        Name<br>
+        <input type="text" name="name" required>
+      </label>
 
-  <label>
-    Email<br>
-    <input type="email" name="email" required>
-  </label>
+      <label>
+        Email<br>
+        <input type="email" name="email" required>
+      </label>
+
 
   <label>
     Type of enquiry<br>
@@ -106,18 +224,45 @@ Email: alexmallettproductions@outlook.com
       <option value="General enquiry">General enquiry</option>
     </select>
   </label>
+<label>
+        Details<br>
+        <textarea name="message" rows="6" required></textarea>
+      </label>
 
-  <label>
-    Details<br>
-    <textarea name="message" rows="6" required></textarea>
-  </label>
+      <input type="text" name="_gotcha" style="display:none">
 
-  <!-- Honeypot field -->
-  <input type="text" name="_gotcha" style="display:none">
+      <button type="submit">Send message</button>
+    </form>
+  </div>
+</div>
 
-  <button type="submit">Send message</button>
-</form>
+</div>
+  <script>
+  const modal = document.getElementById("contactModal");
+  const openBtn = document.getElementById("openContact");
+  const closeBtn = document.getElementById("closeContact");
 
+  function openModal(){
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeModal(){
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (e) => {
+    if(e.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape") closeModal();
+  });
+</script>
 
 </body>
 </html>
