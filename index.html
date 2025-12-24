@@ -80,29 +80,44 @@ Email: alexmallettproductions@outlook.com
 </p>
 <h2>Contact</h2>
 
+<h2>Contact</h2>
+
 <form action="https://formspree.io/f/xkowaaae" method="POST" class="contact-form">
 
   <input type="hidden" name="_subject" value="Website enquiry">
 
   <label>
-    Your name<br>
+    Name<br>
     <input type="text" name="name" required>
   </label>
 
   <label>
-    Your email<br>
+    Email<br>
     <input type="email" name="email" required>
   </label>
 
   <label>
-    Message<br>
+    Type of enquiry<br>
+    <select name="enquiry_type" required>
+      <option value="" disabled selected>Select an option</option>
+      <option value="General Technician">Freelance theatre work</option>
+      <option value="Lighting / Sound / Stage Management">Lighting/ Sound / Stage management</option>
+      <option value="Cover for Lighting / Sound / Stage Management">Sound / lighting / Stage cover</option>
+      <option value="General enquiry">General enquiry</option>
+    </select>
+  </label>
+
+  <label>
+    Details<br>
     <textarea name="message" rows="6" required></textarea>
   </label>
 
+  <!-- Honeypot field -->
   <input type="text" name="_gotcha" style="display:none">
 
   <button type="submit">Send message</button>
 </form>
+
 
 </body>
 </html>
